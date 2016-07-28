@@ -1,0 +1,18 @@
+nuget {
+	nuspec {
+		id = openmesh;
+		version: 6.2;
+		title: Open Mesh;
+		authors: {RWTH-Aachen University};
+		owners: {Markus Worchel};
+		licenseUrl: "https://www.openmesh.org/license/";
+		projectUrl: "https://www.openmesh.org/";
+		iconUrl: "https://www.openmesh.org/static//OpenMesh_text_512.png";
+		requireLicenseAcceptance: true;
+		summary: A generic and efficient polygon mesh data structure;
+		description: @"OpenMesh is a generic and efficient data structure for representing and manipulating polygonal meshes.";
+		releaseNotes: @"OpenMesh 6.2 is still fully backward compatible with the 2.x to 5.x branches. We marked some functions which should not be used anymore as deprecated and added hints which should be used instead. This release is a minor update to fix compilation errors with Visual Studio 2015 Update 3. We resolved some constructions causing internal compiler and compilation issues. ";
+		copyright: Copyright 2016
+		tags: {OpenMesh, native, Mesh, Half-Edge}
+	}
+}
