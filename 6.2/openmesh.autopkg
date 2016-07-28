@@ -15,4 +15,15 @@ nuget {
 		copyright: Copyright 2016
 		tags: {OpenMesh, native, Mesh, Half-Edge}
 	}
+	
+	files {
+		// 
+		#defines {
+			VS13_ROOT = VS2013;
+			VS15_ROOT = VS2015;
+		}
+		
+		[x64,v120,debug] {
+		}
+	}
 }
