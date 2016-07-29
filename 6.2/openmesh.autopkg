@@ -19,6 +19,7 @@ nuget {
 	files {	
 		// Include the headers (all the same for version 6.2)
 		include: { "include\*" };
+
 		
 		// ---------------------------------------------------------------------------------
 		// Visual Studio 2012
@@ -93,5 +94,9 @@ nuget {
 			lib: { vs2015\x64\lib\OpenMeshCore.lib, vs2015\x64\lib\OpenMeshTools.lib };
 			bin: { vs2015\x64\bin\OpenMeshCore.dll, vs2015\x64\bin\OpenMeshTools.dll };
 		}
+	}
+	
+	targets {
+		Defines += HAS_OPENMESH;
 	}
 }
