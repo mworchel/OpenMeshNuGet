@@ -16,32 +16,82 @@ nuget {
 		tags: {OpenMesh, native, Mesh, Half-Edge}
 	}
 	
-	files {
-		// 
-		#defines {
-			VS12_ROOT = vs2012\;
-			VS13_ROOT = vs2013\;
-			VS15_ROOT = vs2015\;
-			x86_lib   = x86\lib\;
-			x86_bin   = x86\bin\;
-			x64_lib   = x64\lib\;
-			x64_bin   = x86\bin\;
-			
-		}
-		
+	files {	
 		// Include the headers (all the same for version 6.2)
 		include: { "include\*" };
 		
-		// vs 2012 32-bit debug config
+		// ---------------------------------------------------------------------------------
+		// Visual Studio 2012
+		// ---------------------------------------------------------------------------------
+		
 		[x86, v110, debug] {
 			lib: { vs2012\x86\lib\OpenMeshCored.lib, vs2012\x86\lib\OpenMeshToolsd.lib };
 			bin: { vs2012\x86\bin\OpenMeshCored.dll, vs2012\x86\bin\OpenMeshToolsd.dll };
 		}
 		
-		// vs 2012 32-bit release config
 		[x86, v110, release] {
 			lib: { vs2012\x86\lib\OpenMeshCore.lib, vs2012\x86\lib\OpenMeshTools.lib };
 			bin: { vs2012\x86\bin\OpenMeshCore.dll, vs2012\x86\bin\OpenMeshTools.dll };
+		}
+		
+		[x64, v110, debug] {
+			lib: { vs2012\x64\lib\OpenMeshCored.lib, vs2012\x64\lib\OpenMeshToolsd.lib };
+			bin: { vs2012\x64\bin\OpenMeshCored.dll, vs2012\x64\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x64, v110, release] {
+			lib: { vs2012\x64\lib\OpenMeshCore.lib, vs2012\x64\lib\OpenMeshTools.lib };
+			bin: { vs2012\x64\bin\OpenMeshCore.dll, vs2012\x64\bin\OpenMeshTools.dll };
+		}
+		
+		
+		// ---------------------------------------------------------------------------------
+		// Visual Studio 2013
+		// ---------------------------------------------------------------------------------
+		
+		[x86, v120, debug] {
+			lib: { vs2013\x86\lib\OpenMeshCored.lib, vs2013\x86\lib\OpenMeshToolsd.lib };
+			bin: { vs2013\x86\bin\OpenMeshCored.dll, vs2013\x86\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x86, v120, release] {
+			lib: { vs2013\x86\lib\OpenMeshCore.lib, vs2013\x86\lib\OpenMeshTools.lib };
+			bin: { vs2013\x86\bin\OpenMeshCore.dll, vs2013\x86\bin\OpenMeshTools.dll };
+		}
+		
+		[x64, v120, debug] {
+			lib: { vs2013\x64\lib\OpenMeshCored.lib, vs2013\x64\lib\OpenMeshToolsd.lib };
+			bin: { vs2013\x64\bin\OpenMeshCored.dll, vs2013\x64\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x64, v120, release] {
+			lib: { vs2013\x64\lib\OpenMeshCore.lib, vs2013\x64\lib\OpenMeshTools.lib };
+			bin: { vs2013\x64\bin\OpenMeshCore.dll, vs2013\x64\bin\OpenMeshTools.dll };
+		}
+		
+		
+		/ ---------------------------------------------------------------------------------
+		// Visual Studio 2015
+		// ---------------------------------------------------------------------------------
+		
+		[x86, v140, debug] {
+			lib: { vs2015\x86\lib\OpenMeshCored.lib, vs2015\x86\lib\OpenMeshToolsd.lib };
+			bin: { vs2015\x86\bin\OpenMeshCored.dll, vs2015\x86\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x86, v140, release] {
+			lib: { vs2015\x86\lib\OpenMeshCore.lib, vs2015\x86\lib\OpenMeshTools.lib };
+			bin: { vs2015\x86\bin\OpenMeshCore.dll, vs2015\x86\bin\OpenMeshTools.dll };
+		}
+		
+		[x64, v140, debug] {
+			lib: { vs2015\x64\lib\OpenMeshCored.lib, vs2015\x64\lib\OpenMeshToolsd.lib };
+			bin: { vs2015\x64\bin\OpenMeshCored.dll, vs2015\x64\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x64, v140, release] {
+			lib: { vs2015\x64\lib\OpenMeshCore.lib, vs2015\x64\lib\OpenMeshTools.lib };
+			bin: { vs2015\x64\bin\OpenMeshCore.dll, vs2015\x64\bin\OpenMeshTools.dll };
 		}
 	}
 }
