@@ -26,9 +26,22 @@ nuget {
 			x86_bin   = x86\bin\;
 			x64_lib   = x64\lib\;
 			x64_bin   = x86\bin\;
+			
 		}
 		
-		[x64,v120,debug] {
+		// Include the headers (all the same for version 6.2)
+		include: { "include\*" };
+		
+		// vs 2012 32-bit debug config
+		[x86, v110, debug] {
+			lib: { vs2012\x86\lib\OpenMeshCored.lib, vs2012\x86\lib\OpenMeshToolsd.lib };
+			bin: { vs2012\x86\bin\OpenMeshCored.dll, vs2012\x86\bin\OpenMeshToolsd.dll };
+		}
+		
+		// vs 2012 32-bit release config
+		[x86, v110, release] {
+			lib: { vs2012\x86\lib\OpenMeshCore.lib, vs2012\x86\lib\OpenMeshTools.lib };
+			bin: { vs2012\x86\bin\OpenMeshCore.dll, vs2012\x86\bin\OpenMeshTools.dll };
 		}
 	}
 }
