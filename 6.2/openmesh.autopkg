@@ -19,8 +19,13 @@ nuget {
 	files {
 		// 
 		#defines {
-			VS13_ROOT = VS2013;
-			VS15_ROOT = VS2015;
+			VS12_ROOT = vs2012\;
+			VS13_ROOT = vs2013\;
+			VS15_ROOT = vs2015\;
+			x86_lib   = x86\lib\;
+			x86_bin   = x86\bin\;
+			x64_lib   = x64\lib\;
+			x64_bin   = x86\bin\;
 		}
 		
 		[x64,v120,debug] {
