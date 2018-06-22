@@ -18,13 +18,13 @@ os.chdir(build_dir)
 # Assemble list of used toolsets
 toolsets = [
     ("Visual Studio 2013", "v120", {"x86" : "Visual Studio 12 2013", "x64" : "Visual Studio 12 2013 Win64"}),
-    #("Visual Studio 2015", "v140", {"x86" : "Visual Studio 14 2015", "x64" : "Visual Studio 14 2015 Win64"}),
-    #("Visual Studio 2017", "v150", {"x86" : "Visual Studio 15 2017", "x64" : "Visual Studio 15 2017 Win64"}),
+    ("Visual Studio 2015", "v140", {"x86" : "Visual Studio 14 2015", "x64" : "Visual Studio 14 2015 Win64"}),
+    ("Visual Studio 2017", "v150", {"x86" : "Visual Studio 15 2017", "x64" : "Visual Studio 15 2017 Win64"}),
     ]
 
 platforms = [
     "x86", 
-    #"x64"
+    "x64"
     ]
 configurations = [
     "debug", 
@@ -37,37 +37,30 @@ linkages = [
         "lib_files" : "lib/*.lib",
         "bin_files" : "*.dll",
     }, 
-    # {
-    #     "name" : "static", 
-    #     "flags" : "-DOPENMESH_BUILD_SHARED:BOOL=FALSE",
-    #     "lib_files" : "lib/*.lib",
-    # }
+    {
+        "name" : "static", 
+        "flags" : "-DOPENMESH_BUILD_SHARED:BOOL=FALSE",
+        "lib_files" : "lib/*.lib",
+    }
     ]
-
-builds = {}
 
 install_dir = "./install"
 autopkg_dir = "D:/openmesh-6.3"
 os.makedirs(autopkg_dir, exist_ok=True)
 for name, version, generators in toolsets:
-    print("Building for " + name)
-
+    print("Building for {0:s} ({1:s})".format(name, version))
     for platform in platforms:
-        # Clear the build directory
+        # Clear the build directory as different platforms require different generators
         clear_directory(".")
-        for config in configurations:
-            print("Building with generator " + generators[platform])
+        for linkage in linkages:
+            # Configure the solutions
+            os.system('cmake ./.. ' + linkage["flags"] + ' -DCMAKE_INSTALL_PREFIX:PATH=' + install_dir + ' -G "' + generators[platform] + '"')
+            for config in configurations:
+                print("Building platform {0:s} with configuration {1:s} ({2:s})".format(platform, config, linkage["name"]))
 
-            for linkage in linkages:
                 # Clear the install directory and make the build
                 clear_directory(install_dir + "/")
-                os.system('cmake ./.. ' + linkage["flags"] + ' -DCMAKE_INSTALL_PREFIX:PATH=' + install_dir + ' -G "' + generators[platform] + '"')
                 os.system('cmake --build . --target INSTALL --config ' + config)
-
-                # Create the meta info of this build
-                pivots    = [version, platform, config, linkage]
-                lib_files = []
-                bin_files = []
 
                 # Copy the created files into the right directory
                 autopkg_relative_lib_dir = "build/" + version + "/" + platform + "/" + config + "/" + linkage["name"] + "/lib"
@@ -81,30 +74,17 @@ for name, version, generators in toolsets:
                 if "lib_files" in linkage:
                     for lib_file in glob.glob(install_dir + "/" + linkage["lib_files"]):
                         filename = os.path.basename(lib_file)
-                        lib_files.append(autopkg_relative_lib_dir + "/" + filename)
                         shutil.copy(lib_file, output_lib_dir + "/" + filename)
 
                 # Copy bin files
                 if "bin_files" in linkage:
                     for bin_file in glob.glob(install_dir + "/" + linkage["bin_files"]):
-                        filename = os.path.basename(bin_file)                    
-                        bin_files.append(autopkg_relative_bin_dir + "/" + filename)                    
+                        filename = os.path.basename(bin_file)                                    
                         shutil.copy(bin_file, output_bin_dir + "/" + filename)
-
-                if not name in builds:
-                    builds[name] = []
-
-                builds[name].append ({
-                    "pivots" : pivots,
-                    "lib_files" : lib_files,
-                    "bin_files" : bin_files
-                })
 
                 # Copy the include dir into the base directory
                 if os.path.exists(install_dir + "/include") and not os.path.exists(autopkg_dir + "/include"):
                     shutil.copytree(install_dir + "/include", autopkg_dir + "/include")
-
-                os.system("pause")
 
 # # Change to the autopkg dir and go from there
 # os.chdir(autopkg_dir)
