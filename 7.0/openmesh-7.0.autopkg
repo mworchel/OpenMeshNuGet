@@ -1,0 +1,129 @@
+configurations
+{
+	Toolset
+	{
+		key : "PlatformToolset";
+		choices: { v141, v140, v120, v110 };
+	};
+}
+
+nuget
+{
+	nuspec
+	{
+		id = openmesh;
+		version: 7.0;
+		title: Open Mesh;
+		authors: {RWTH-Aachen University};
+		owners: {Markus Worchel};
+		licenseUrl: "https://www.openmesh.org/license/";
+		projectUrl: "https://www.openmesh.org/";
+		iconUrl: "https://www.openmesh.org/static//OpenMesh_text_512.png";
+		requireLicenseAcceptance: true;
+		summary: A generic and efficient polygon mesh data structure;
+		description: @"OpenMesh is a generic and efficient data structure for representing and manipulating polygonal meshes.";
+		releaseNotes: @"This release adds more C++11 support. We can't guarantee that OpenMesh compiles with non C++11 compatible compilers anymore. Furthermore we removed the Python support from the package itself and moved to a new interface available via Pypi.org. The source of the python bindings is now in our Gitlab. Next to the Core updates for C++11 we fixed several bugs and improved handling for external vector types. The Subdivider was updated with a midpoint subdivision scheme. Another set of changes adds fixes and improvements to several reader and writer modules.";
+		copyright: Copyright 2018;
+		tags: {OpenMesh, native, Mesh, Half-Edge};
+	}
+
+	files
+	{
+		nested1Include: { #destination = ${d_include}OpenMesh/Core/Geometry; "include/OpenMesh/Core/Geometry/*"};
+		nested2Include: { #destination = ${d_include}OpenMesh/Core/IO; "include/OpenMesh/Core/IO/*"};
+		nested3Include: { #destination = ${d_include}OpenMesh/Core/IO/exporter; "include/OpenMesh/Core/IO/exporter/*"};
+		nested4Include: { #destination = ${d_include}OpenMesh/Core/IO/importer; "include/OpenMesh/Core/IO/importer/*"};
+		nested5Include: { #destination = ${d_include}OpenMesh/Core/IO/reader; "include/OpenMesh/Core/IO/reader/*"};
+		nested6Include: { #destination = ${d_include}OpenMesh/Core/IO/writer; "include/OpenMesh/Core/IO/writer/*"};
+		nested7Include: { #destination = ${d_include}OpenMesh/Core/Mesh; "include/OpenMesh/Core/Mesh/*"};
+		nested8Include: { #destination = ${d_include}OpenMesh/Core/Mesh/gen; "include/OpenMesh/Core/Mesh/gen/*"};
+		nested9Include: { #destination = ${d_include}OpenMesh/Core/System; "include/OpenMesh/Core/System/*"};
+		nested10Include: { #destination = ${d_include}OpenMesh/Core/Utils; "include/OpenMesh/Core/Utils/*"};
+		nested11Include: { #destination = ${d_include}OpenMesh/Tools/Decimater; "include/OpenMesh/Tools/Decimater/*"};
+		nested12Include: { #destination = ${d_include}OpenMesh/Tools/Dualizer; "include/OpenMesh/Tools/Dualizer/*"};
+		nested13Include: { #destination = ${d_include}OpenMesh/Tools/Kernel_OSG; "include/OpenMesh/Tools/Kernel_OSG/*"};
+		nested14Include: { #destination = ${d_include}OpenMesh/Tools/Smoother; "include/OpenMesh/Tools/Smoother/*"};
+		nested15Include: { #destination = ${d_include}OpenMesh/Tools/Subdivider/Adaptive/Composite; "include/OpenMesh/Tools/Subdivider/Adaptive/Composite/*"};
+		nested16Include: { #destination = ${d_include}OpenMesh/Tools/Subdivider/Uniform; "include/OpenMesh/Tools/Subdivider/Uniform/*"};
+		nested17Include: { #destination = ${d_include}OpenMesh/Tools/Subdivider/Uniform/Composite; "include/OpenMesh/Tools/Subdivider/Uniform/Composite/*"};
+		nested18Include: { #destination = ${d_include}OpenMesh/Tools/Utils; "include/OpenMesh/Tools/Utils/*"};
+		nested19Include: { #destination = ${d_include}OpenMesh/Tools/VDPM; "include/OpenMesh/Tools/VDPM/*"};
+
+		[v120, x64, debug]
+		{
+			lib: { build/v120/x64/debug/lib/OpenMeshCored.lib, build/v120/x64/debug/lib/OpenMeshToolsd.lib };
+			bin: { build/v120/x64/debug/bin/OpenMeshCored.dll, build/v120/x64/debug/bin/OpenMeshToolsd.dll };
+		}
+		
+		[v120, x64, release]
+		{
+			lib: { build/v120/x64/release/lib/OpenMeshCore.lib, build/v120/x64/release/lib/OpenMeshTools.lib };
+			bin: { build/v120/x64/release/bin/OpenMeshCore.dll, build/v120/x64/release/bin/OpenMeshTools.dll };
+		}
+		
+		[v120, x86, debug]
+		{
+			lib: { build/v120/x86/debug/lib/OpenMeshCored.lib, build/v120/x86/debug/lib/OpenMeshToolsd.lib };
+			bin: { build/v120/x86/debug/bin/OpenMeshCored.dll, build/v120/x86/debug/bin/OpenMeshToolsd.dll };
+		}
+		
+		[v120, x86, release]
+		{
+			lib: { build/v120/x86/release/lib/OpenMeshCore.lib, build/v120/x86/release/lib/OpenMeshTools.lib };
+			bin: { build/v120/x86/release/bin/OpenMeshCore.dll, build/v120/x86/release/bin/OpenMeshTools.dll };
+		}
+		
+		[v140, x64, debug]
+		{
+			lib: { build/v140/x64/debug/lib/OpenMeshCored.lib, build/v140/x64/debug/lib/OpenMeshToolsd.lib };
+			bin: { build/v140/x64/debug/bin/OpenMeshCored.dll, build/v140/x64/debug/bin/OpenMeshToolsd.dll };
+		}
+		
+		[v140, x64, release]
+		{
+			lib: { build/v140/x64/release/lib/OpenMeshCore.lib, build/v140/x64/release/lib/OpenMeshTools.lib };
+			bin: { build/v140/x64/release/bin/OpenMeshCore.dll, build/v140/x64/release/bin/OpenMeshTools.dll };
+		}
+		
+		[v140, x86, debug]
+		{
+			lib: { build/v140/x86/debug/lib/OpenMeshCored.lib, build/v140/x86/debug/lib/OpenMeshToolsd.lib };
+			bin: { build/v140/x86/debug/bin/OpenMeshCored.dll, build/v140/x86/debug/bin/OpenMeshToolsd.dll };
+		}
+		
+		[v140, x86, release]
+		{
+			lib: { build/v140/x86/release/lib/OpenMeshCore.lib, build/v140/x86/release/lib/OpenMeshTools.lib };
+			bin: { build/v140/x86/release/bin/OpenMeshCore.dll, build/v140/x86/release/bin/OpenMeshTools.dll };
+		}
+		
+		[v141, x64, debug]
+		{
+			lib: { build/v141/x64/debug/lib/OpenMeshCored.lib, build/v141/x64/debug/lib/OpenMeshToolsd.lib };
+			bin: { build/v141/x64/debug/bin/OpenMeshCored.dll, build/v141/x64/debug/bin/OpenMeshToolsd.dll };
+		}
+		
+		[v141, x64, release]
+		{
+			lib: { build/v141/x64/release/lib/OpenMeshCore.lib, build/v141/x64/release/lib/OpenMeshTools.lib };
+			bin: { build/v141/x64/release/bin/OpenMeshCore.dll, build/v141/x64/release/bin/OpenMeshTools.dll };
+		}
+		
+		[v141, x86, debug]
+		{
+			lib: { build/v141/x86/debug/lib/OpenMeshCored.lib, build/v141/x86/debug/lib/OpenMeshToolsd.lib };
+			bin: { build/v141/x86/debug/bin/OpenMeshCored.dll, build/v141/x86/debug/bin/OpenMeshToolsd.dll };
+		}
+		
+		[v141, x86, release]
+		{
+			lib: { build/v141/x86/release/lib/OpenMeshCore.lib, build/v141/x86/release/lib/OpenMeshTools.lib };
+			bin: { build/v141/x86/release/bin/OpenMeshCore.dll, build/v141/x86/release/bin/OpenMeshTools.dll };
+		}
+		
+	}
+	targets
+	{
+		Defines += { HAS_OPENMESH, _USE_MATH_DEFINES};
+	}
+}

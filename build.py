@@ -68,11 +68,12 @@ configurations = [
     ]
 
 linkages = [
-    {
-        'name' : 'static', 
-        'flags' : '-DOPENMESH_BUILD_SHARED:BOOL=FALSE',
-        'lib_files' : 'lib/*.lib',
-    },
+    # TODO: Figure out why static linkage does not work in the importing projects
+    # {
+    #     'name' : 'static', 
+    #     'flags' : '-DOPENMESH_BUILD_SHARED:BOOL=FALSE',
+    #     'lib_files' : 'lib/*.lib',
+    # },
     {
         'name' : 'shared', 
         'flags' : '-DOPENMESH_BUILD_SHARED:BOOL=TRUE',
@@ -117,8 +118,10 @@ if not use_existing:
                         continue
 
                     # Copy the binary files into the output dir
-                    output_lib_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/lib'
-                    output_bin_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/bin'
+                    #output_lib_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/lib'
+                    #output_bin_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/bin'
+                    output_lib_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/lib'
+                    output_bin_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/bin'
                     os.makedirs(output_lib_dir, exist_ok=True)
                     os.makedirs(output_bin_dir, exist_ok=True)
 

@@ -1,0 +1,119 @@
+nuget {
+	nuspec {
+		id = openmesh;
+		version: 6.2;
+		title: Open Mesh;
+		authors: {RWTH-Aachen University};
+		owners: {Markus Worchel};
+		licenseUrl: "https://www.openmesh.org/license/";
+		projectUrl: "https://www.openmesh.org/";
+		iconUrl: "https://www.openmesh.org/static//OpenMesh_text_512.png";
+		requireLicenseAcceptance: true;
+		summary: A generic and efficient polygon mesh data structure;
+		description: @"OpenMesh is a generic and efficient data structure for representing and manipulating polygonal meshes.";
+		releaseNotes: @"OpenMesh 6.2 is still fully backward compatible with the 2.x to 5.x branches. We marked some functions which should not be used anymore as deprecated and added hints which should be used instead. This release is a minor update to fix compilation errors with Visual Studio 2015 Update 3. We resolved some constructions causing internal compiler and compilation issues. ";
+		copyright: Copyright 2016;
+		tags: {OpenMesh, native, Mesh, Half-Edge};
+	}
+	
+	files {	
+		nested1Include: { #destination = ${d_include}OpenMesh\Core\Geometry; "include\OpenMesh\Core\Geometry\*"};
+		nested2Include: { #destination = ${d_include}OpenMesh\Core\IO; "include\OpenMesh\Core\IO\*"};
+		nested3Include: { #destination = ${d_include}OpenMesh\Core\IO\exporter; "include\OpenMesh\Core\IO\exporter\*"};
+		nested4Include: { #destination = ${d_include}OpenMesh\Core\IO\importer; "include\OpenMesh\Core\IO\importer\*"};
+		nested5Include: { #destination = ${d_include}OpenMesh\Core\IO\reader; "include\OpenMesh\Core\IO\reader\*"};
+		nested6Include: { #destination = ${d_include}OpenMesh\Core\IO\writer; "include\OpenMesh\Core\IO\writer\*"};
+		nested7Include: { #destination = ${d_include}OpenMesh\Core\Mesh; "include\OpenMesh\Core\Mesh\*"};
+		nested8Include: { #destination = ${d_include}OpenMesh\Core\Mesh\gen; "include\OpenMesh\Core\Mesh\gen\*"};
+		nested9Include: { #destination = ${d_include}OpenMesh\Core\System; "include\OpenMesh\Core\System\*"};
+		nested10Include: { #destination = ${d_include}OpenMesh\Core\Utils; "include\OpenMesh\Core\Utils\*"};
+		nested11Include: { #destination = ${d_include}OpenMesh\Tools\Decimater; "include\OpenMesh\Tools\Decimater\*"};
+		nested12Include: { #destination = ${d_include}OpenMesh\Tools\Dualizer; "include\OpenMesh\Tools\Dualizer\*"};
+		nested13Include: { #destination = ${d_include}OpenMesh\Tools\Kernel_OSG; "include\OpenMesh\Tools\Kernel_OSG\*"};
+		nested14Include: { #destination = ${d_include}OpenMesh\Tools\Smoother; "include\OpenMesh\Tools\Smoother\*"};
+		nested15Include: { #destination = ${d_include}OpenMesh\Tools\Subdivider\Adaptive\Composite; "include\OpenMesh\Tools\Subdivider\Adaptive\Composite\*"};
+		nested16Include: { #destination = ${d_include}OpenMesh\Tools\Subdivider\Uniform; "include\OpenMesh\Tools\Subdivider\Uniform\*"};
+		nested17Include: { #destination = ${d_include}OpenMesh\Tools\Subdivider\Uniform\Composite; "include\OpenMesh\Tools\Subdivider\Uniform\Composite\*"};
+		nested18Include: { #destination = ${d_include}OpenMesh\Tools\Utils; "include\OpenMesh\Tools\Utils\*"};
+		nested19Include: { #destination = ${d_include}OpenMesh\Tools\VDPM; "include\OpenMesh\Tools\VDPM\*"};
+
+		
+		// ---------------------------------------------------------------------------------
+		// Visual Studio 2012
+		// ---------------------------------------------------------------------------------
+		
+		[x86, v110, debug] {
+			lib: { vs2012\x86\lib\OpenMeshCored.lib, vs2012\x86\lib\OpenMeshToolsd.lib };
+			bin: { vs2012\x86\bin\OpenMeshCored.dll, vs2012\x86\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x86, v110, release] {
+			lib: { vs2012\x86\lib\OpenMeshCore.lib, vs2012\x86\lib\OpenMeshTools.lib };
+			bin: { vs2012\x86\bin\OpenMeshCore.dll, vs2012\x86\bin\OpenMeshTools.dll };
+		}
+		
+		[x64, v110, debug] {
+			lib: { vs2012\x64\lib\OpenMeshCored.lib, vs2012\x64\lib\OpenMeshToolsd.lib };
+			bin: { vs2012\x64\bin\OpenMeshCored.dll, vs2012\x64\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x64, v110, release] {
+			lib: { vs2012\x64\lib\OpenMeshCore.lib, vs2012\x64\lib\OpenMeshTools.lib };
+			bin: { vs2012\x64\bin\OpenMeshCore.dll, vs2012\x64\bin\OpenMeshTools.dll };
+		}
+		
+		
+		// ---------------------------------------------------------------------------------
+		// Visual Studio 2013
+		// ---------------------------------------------------------------------------------
+		
+		[x86, v120, debug] {
+			lib: { vs2013\x86\lib\OpenMeshCored.lib, vs2013\x86\lib\OpenMeshToolsd.lib };
+			bin: { vs2013\x86\bin\OpenMeshCored.dll, vs2013\x86\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x86, v120, release] {
+			lib: { vs2013\x86\lib\OpenMeshCore.lib, vs2013\x86\lib\OpenMeshTools.lib };
+			bin: { vs2013\x86\bin\OpenMeshCore.dll, vs2013\x86\bin\OpenMeshTools.dll };
+		}
+		
+		[x64, v120, debug] {
+			lib: { vs2013\x64\lib\OpenMeshCored.lib, vs2013\x64\lib\OpenMeshToolsd.lib };
+			bin: { vs2013\x64\bin\OpenMeshCored.dll, vs2013\x64\bin\OpenMeshToolsd.dll };
+		}
+		
+		[x64, v120, release] {
+			lib: { vs2013\x64\lib\OpenMeshCore.lib, vs2013\x64\lib\OpenMeshTools.lib };
+			bin: { vs2013\x64\bin\OpenMeshCore.dll, vs2013\x64\bin\OpenMeshTools.dll };
+		}
+		
+		
+		// ---------------------------------------------------------------------------------
+		// Visual Studio 2015 (No support for v140 so this has to be added manually to the nupkg files)
+		// ---------------------------------------------------------------------------------
+		
+		//[x86, v140, debug] {
+		//	lib: { vs2015\x86\lib\OpenMeshCored.lib, vs2015\x86\lib\OpenMeshToolsd.lib };
+		//	bin: { vs2015\x86\bin\OpenMeshCored.dll, vs2015\x86\bin\OpenMeshToolsd.dll };
+		//}
+		
+		//[x86, v140, release] {
+		//	lib: { vs2015\x86\lib\OpenMeshCore.lib, vs2015\x86\lib\OpenMeshTools.lib };
+		//	bin: { vs2015\x86\bin\OpenMeshCore.dll, vs2015\x86\bin\OpenMeshTools.dll };
+		//}
+		
+		//[x64, v140, debug] {
+		//	lib: { vs2015\x64\lib\OpenMeshCored.lib, vs2015\x64\lib\OpenMeshToolsd.lib };
+		//	bin: { vs2015\x64\bin\OpenMeshCored.dll, vs2015\x64\bin\OpenMeshToolsd.dll };
+		//}
+		
+		//[x64, v140, release] {
+		//	lib: { vs2015\x64\lib\OpenMeshCore.lib, vs2015\x64\lib\OpenMeshTools.lib };
+		//	bin: { vs2015\x64\bin\OpenMeshCore.dll, vs2015\x64\bin\OpenMeshTools.dll };
+		//}
+	}
+	
+	targets {
+		Defines += { HAS_OPENMESH, _USE_MATH_DEFINES};
+	}
+}
