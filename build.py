@@ -10,7 +10,7 @@ def clear_directory(dir_path):
             if os.path.isfile(dir_path + "/" + file):
                 os.remove(dir_path + "/" + file)
             else:
-                shutil.rmtree(dir_path + "/" + file)
+                shutil.rmtree(dir_path + "/" + file, ignore_errors=True)
 
 # Get the necessary directories from the command line
 parser = argparse.ArgumentParser()
@@ -69,35 +69,40 @@ configurations = [
 
 linkages = [
     {
+        'name' : 'static', 
+        'flags' : '-DOPENMESH_BUILD_SHARED:BOOL=FALSE',
+        'lib_files' : 'lib/*.lib',
+    },
+    {
         'name' : 'shared', 
         'flags' : '-DOPENMESH_BUILD_SHARED:BOOL=TRUE',
         'lib_files' : 'lib/*.lib',
         'bin_files' : '*.dll',
-    }, 
-    {
-        'name' : 'static', 
-        'flags' : '-DOPENMESH_BUILD_SHARED:BOOL=FALSE',
-        'lib_files' : 'lib/*.lib',
     }
     ]
-
-install_dir = build_dir + '/install'
 
 cmake_to_coapps_linkage = {
     'static' : 'static',
     'shared' : 'dynamic'
 }
 
+install_dir = build_dir + '/install'
+output_include_dir = os.path.join(output_dir, 'include')
+output_build_dir = os.path.join(output_dir, 'build')
 if not use_existing:
+    # Clear the intermediate output directories
+    if os.path.exists(output_include_dir):
+        shutil.rmtree(output_include_dir)
+    if os.path.exists(output_build_dir):
+        shutil.rmtree(output_build_dir)
     for name, version, generators in toolsets:
         print("Building for {0:s} ({1:s})".format(name, version))
         for platform in platforms:
             generator = generators[platform]
-            # Clear the build directory as different platforms require different generators
-            clear_directory(build_dir)
 
             for linkage in linkages:
                 # Try to create the solution
+                clear_directory(build_dir)
                 if subprocess.call(['cmake', source_dir, linkage['flags'], '-DCMAKE_INSTALL_PREFIX:PATH={:s}'.format(install_dir), '-G', generator, '-DBUILD_APPS:BOOL=FALSE'], cwd=build_dir) > 0:
                     print("Solution creation failed. Continuing...")
                     continue
@@ -112,8 +117,8 @@ if not use_existing:
                         continue
 
                     # Copy the binary files into the output dir
-                    output_lib_dir = output_dir + '/build' + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/lib'
-                    output_bin_dir = output_dir + '/build' + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/bin'
+                    output_lib_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/lib'
+                    output_bin_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/bin'
                     os.makedirs(output_lib_dir, exist_ok=True)
                     os.makedirs(output_bin_dir, exist_ok=True)
 
@@ -130,13 +135,12 @@ if not use_existing:
                             shutil.copy(bin_file, output_bin_dir + '/' + filename)
 
                     # Copy the include dir into the base directory
-                    if os.path.exists(install_dir + '/include') and not os.path.exists(output_dir + '/include'):
-                        shutil.copytree(install_dir + '/include', output_dir + '/include')
+                    if os.path.exists(install_dir + '/include') and not os.path.exists(output_include_dir):
+                        shutil.copytree(install_dir + '/include', output_include_dir)
 
 
 # Generate the includes for the autopkg
 print("Collecting include directories...")
-output_include_dir = os.path.join(output_dir, 'include')
 include_paths = []
 index = 1
 for root, dirs, files in os.walk(output_include_dir):
@@ -146,7 +150,6 @@ for root, dirs, files in os.walk(output_include_dir):
 
 # Collect the binary files from the filesystem
 print("Collecting binary directories...")
-output_build_dir = os.path.join(output_dir, 'build')
 builds = []
 for root, dirs, files in os.walk(output_build_dir, topdown=False):
     if "bin" in dirs and "lib" in dirs:

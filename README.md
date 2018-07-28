@@ -1,2 +1,2 @@
 # openmesh-nuget
-NuGet package for the OpenMesh library
+Published NuGet packages for OpenMesh and a script for creating them automatically from source
