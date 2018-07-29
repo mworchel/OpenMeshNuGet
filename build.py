@@ -68,15 +68,27 @@ configurations = [
     ]
 
 linkages = [
-    # TODO: Figure out why static linkage does not work in the importing projects
-    # {
-    #     'name' : 'static', 
-    #     'flags' : '-DOPENMESH_BUILD_SHARED:BOOL=FALSE',
-    #     'lib_files' : 'lib/*.lib',
-    # },
+    {
+        'name' : 'static', 
+        'flags' : 
+        [
+            '-DOPENMESH_BUILD_SHARED:BOOL=FALSE', 
+            # '-DCMAKE_C_FLAGS_DEBUG:STRING=/D_DEBUG /MTd /Zi  /Ob0 /Od /RTC1',
+            # '-DCMAKE_C_FLAGS_MINSIZEREL:STRING=/MT /O1 /Ob1 /D NDEBUG',
+            # '-DCMAKE_C_FLAGS_RELEASE:STRING=/MT /O2 /Ob2 /D NDEBUG',
+            # '-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING=/MT /Zi /O2 /Ob1 /D NDEBUG',
+            # '-DCMAKE_CXX_FLAGS_DEBUG:STRING=/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1',
+            # '-DCMAKE_CXX_FLAGS_MINSIZEREL:STRING=/MT /O1 /Ob1 /D NDEBUG',
+            # '-DCMAKE_CXX_FLAGS_RELEASE:STRING=/MT /O2 /Ob2 /D NDEBUG',
+            # '-DCMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=/MT /Zi /O2 /Ob1 /D NDEBUG',
+            # '-DCMAKE_C_FLAGS_DEBUG:STRING=/D_DEBUG /MTd /Zi  /Ob0 /Od /RTC1', 
+            # '-DCMAKE_CXX_FLAGS_DEBUG:STRING=/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1'
+        ],
+        'lib_files' : 'lib/*.lib',
+    },
     {
         'name' : 'shared', 
-        'flags' : '-DOPENMESH_BUILD_SHARED:BOOL=TRUE',
+        'flags' : ['-DOPENMESH_BUILD_SHARED:BOOL=TRUE'],
         'lib_files' : 'lib/*.lib',
         'bin_files' : '*.dll',
     }
@@ -104,7 +116,7 @@ if not use_existing:
             for linkage in linkages:
                 # Try to create the solution
                 clear_directory(build_dir)
-                if subprocess.call(['cmake', source_dir, linkage['flags'], '-DCMAKE_INSTALL_PREFIX:PATH={:s}'.format(install_dir), '-G', generator, '-DBUILD_APPS:BOOL=FALSE'], cwd=build_dir) > 0:
+                if subprocess.call(['cmake', source_dir, *linkage['flags'], '-DCMAKE_INSTALL_PREFIX:PATH={:s}'.format(install_dir), '-G', generator, '-DBUILD_APPS:BOOL=FALSE'], cwd=build_dir) > 0:
                     print("Solution creation failed. Continuing...")
                     continue
 
@@ -118,10 +130,8 @@ if not use_existing:
                         continue
 
                     # Copy the binary files into the output dir
-                    #output_lib_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/lib'
-                    #output_bin_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/bin'
-                    output_lib_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/lib'
-                    output_bin_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/bin'
+                    output_lib_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/lib'
+                    output_bin_dir = output_build_dir + '/' + version + '/' + platform + '/' + config + '/' + cmake_to_coapps_linkage[linkage['name']] + '/bin'
                     os.makedirs(output_lib_dir, exist_ok=True)
                     os.makedirs(output_bin_dir, exist_ok=True)
 
@@ -227,6 +237,14 @@ write_line(file, 1, '}') #files
 write_line(file, 1, 'targets')
 write_line(file, 1, '{')
 write_line(file, 2, 'Defines += { HAS_OPENMESH, _USE_MATH_DEFINES};')
+write_line(file, 2, '[debug, static]')
+write_line(file, 2, '{')
+write_line(file, 3, 'RuntimeLibrary = MultiThreadedDebugDLL;')
+write_line(file, 2, '}')
+write_line(file, 2, '[release, static]')
+write_line(file, 2, '{')
+write_line(file, 3, 'RuntimeLibrary = MultiThreadedDLL;')
+write_line(file, 2, '}')
 write_line(file, 1, '}') #targets
 write_line(file, 0, '}') #nuget    
 print("Done.")

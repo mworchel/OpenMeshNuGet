@@ -1,0 +1,1 @@
+This release is a minor bugfix release. We now enforce C++-11 in cmake to make sure OpenMesh compiles without having to add CXX Flags manually with compilers requiring additional flags to enable C++11. Furhermore a regression in the OBJ reader was fixed causing very poor performance.

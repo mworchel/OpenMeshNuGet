@@ -1,0 +1,1 @@
+OpenMesh 6.2 is still fully backward compatible with the 2.x to 5.x branches. We marked some functions which should not be used anymore as deprecated and added hints which should be used instead. This release is a minor update to fix compilation errors with Visual Studio 2015 Update 3. We resolved some constructions causing internal compiler and compilation issues. 
